@@ -13,6 +13,7 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
 - Terraform
 - Postman
 - kubectl
+- Prometheus and Grafana
 ```
 
 ### Installation
