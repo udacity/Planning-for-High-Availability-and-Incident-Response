@@ -1,0 +1,622 @@
+{
+	"info": {
+		"_postman_id": "648e6f46-8ffa-4b27-9f17-8d5dfd534e91",
+		"name": "SRE Project",
+		"description": "Use this collection to:\r\n* Initialize the database\r\n* Obtain a token\r\n* Seed the database by POSTing events\r\n* GET events",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Initialize the Database",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Success check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status.success).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"init db\",\r\n\t\"location\": \"home\",\r\n\t\"description\": \"initialize the DB\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{public-ip}}/init",
+					"protocol": "http",
+					"host": [
+						"{{public-ip}}"
+					],
+					"path": [
+						"init"
+					]
+				},
+				"description": "The following response should be returned:\r\n```\r\n{\r\n    \"dataset\": {\r\n        \"created\": \"Day, DD MM YYYY HH:MM:SS TZD\",\r\n        \"description\": \"initialize the DB\",\r\n        \"id\": 1,\r\n        \"location\": \"home\",\r\n        \"name\": \"init db\"\r\n    },\r\n    \"status\": {\r\n        \"message\": \"101: Created.\",\r\n        \"records\": 1,\r\n        \"success\": true\r\n    }\r\n}\r\n```\r\nIf it is an error, please check the logs in `/var/log/api/api.err.log`"
+			},
+			"response": []
+		},
+		{
+			"name": "Register a User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Success check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status.success).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Set Token\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    pm.environment.set(\"token\", jsonResponse.dataset.token);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"{{username}}\",\r\n\t\"email\": \"{{email}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{public-ip}}/auth/register",
+					"protocol": "http",
+					"host": [
+						"{{public-ip}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				},
+				"description": "Register an inital user:\r\n\r\n```\r\n{\r\n\t\"username\": \"<username>\",\r\n\t\"email\": \"<email>\"\r\n}\r\n```"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Success check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status.success).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Set EventId\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    pm.environment.set(\"event-id\", jsonResponse.dataset.id);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Set a random location and a random animal.\r",
+							"\r",
+							"var countryList = [\r",
+							"\t\"Afghanistan\",\r",
+							"\t\"Albania\",\r",
+							"\t\"Algeria\",\r",
+							"\t\"American Samoa\",\r",
+							"\t\"Andorra\",\r",
+							"\t\"Angola\",\r",
+							"\t\"Anguilla\",\r",
+							"\t\"Antarctica\",\r",
+							"\t\"Argentina\",\r",
+							"\t\"Armenia\",\r",
+							"\t\"Aruba\",\r",
+							"\t\"Australia\",\r",
+							"\t\"Austria\",\r",
+							"\t\"Azerbaijan\",\r",
+							"\t\"Bahamas\",\r",
+							"\t\"Bahrain\",\r",
+							"\t\"Bangladesh\",\r",
+							"\t\"Barbados\",\r",
+							"\t\"Belarus\",\r",
+							"\t\"Belgium\",\r",
+							"\t\"Belize\",\r",
+							"\t\"Benin\",\r",
+							"\t\"Bermuda\",\r",
+							"\t\"Bhutan\",\r",
+							"\t\"Bolivia\",\r",
+							"\t\"Bonaire\",\r",
+							"\t\"Bosnia\",\r",
+							"\t\"Botswana\",\r",
+							"\t\"Bouvet Island\",\r",
+							"\t\"Brazil\",\r",
+							"\t\"Brunei Darussalam\",\r",
+							"\t\"Bulgaria\",\r",
+							"\t\"Burkina Faso\",\r",
+							"\t\"Burundi\",\r",
+							"\t\"Cabo Verde\",\r",
+							"\t\"Cambodia\",\r",
+							"\t\"Cameroon\",\r",
+							"\t\"Canada\",\r",
+							"\t\"Cayman Islands\",\r",
+							"\t\"Central African Republic\",\r",
+							"\t\"Chad\",\r",
+							"\t\"Chile\",\r",
+							"\t\"China\",\r",
+							"\t\"Christmas Island\",\r",
+							"\t\"Cocos (Keeling) Islands (the)\",\r",
+							"\t\"Colombia\",\r",
+							"\t\"Comoros (the)\",\r",
+							"\t\"Congo (the Democratic Republic of the)\",\r",
+							"\t\"Congo (the)\",\r",
+							"\t\"Cook Islands (the)\",\r",
+							"\t\"Costa Rica\",\r",
+							"\t\"Croatia\",\r",
+							"\t\"Cuba\",\r",
+							"\t\"Curaçao\",\r",
+							"\t\"Cyprus\",\r",
+							"\t\"Czechia\",\r",
+							"\t\"Côte d'Ivoire\",\r",
+							"\t\"Denmark\",\r",
+							"\t\"Djibouti\",\r",
+							"\t\"Dominica\",\r",
+							"\t\"Dominican Republic (the)\",\r",
+							"\t\"Ecuador\",\r",
+							"\t\"Egypt\",\r",
+							"\t\"El Salvador\",\r",
+							"\t\"Equatorial Guinea\",\r",
+							"\t\"Eritrea\",\r",
+							"\t\"Estonia\",\r",
+							"\t\"Eswatini\",\r",
+							"\t\"Ethiopia\",\r",
+							"\t\"Falkland Islands (the) [Malvinas]\",\r",
+							"\t\"Faroe Islands (the)\",\r",
+							"\t\"Fiji\",\r",
+							"\t\"Finland\",\r",
+							"\t\"France\",\r",
+							"\t\"French Guiana\",\r",
+							"\t\"French Polynesia\",\r",
+							"\t\"French Southern Territories (the)\",\r",
+							"\t\"Gabon\",\r",
+							"\t\"Gambia (the)\",\r",
+							"\t\"Georgia\",\r",
+							"\t\"Germany\",\r",
+							"\t\"Ghana\",\r",
+							"\t\"Gibraltar\",\r",
+							"\t\"Greece\",\r",
+							"\t\"Greenland\",\r",
+							"\t\"Grenada\",\r",
+							"\t\"Guadeloupe\",\r",
+							"\t\"Guam\",\r",
+							"\t\"Guatemala\",\r",
+							"\t\"Guernsey\",\r",
+							"\t\"Guinea\",\r",
+							"\t\"Guinea-Bissau\",\r",
+							"\t\"Guyana\",\r",
+							"\t\"Haiti\",\r",
+							"\t\"Heard Island and McDonald Islands\",\r",
+							"\t\"Holy See (the)\",\r",
+							"\t\"Honduras\",\r",
+							"\t\"Hong Kong\",\r",
+							"\t\"Hungary\",\r",
+							"\t\"Iceland\",\r",
+							"\t\"India\",\r",
+							"\t\"Indonesia\",\r",
+							"\t\"Iran (Islamic Republic of)\",\r",
+							"\t\"Iraq\",\r",
+							"\t\"Ireland\",\r",
+							"\t\"Isle of Man\",\r",
+							"\t\"Israel\",\r",
+							"\t\"Italy\",\r",
+							"\t\"Jamaica\",\r",
+							"\t\"Japan\",\r",
+							"\t\"Jersey\",\r",
+							"\t\"Jordan\",\r",
+							"\t\"Kazakhstan\",\r",
+							"\t\"Kenya\",\r",
+							"\t\"Kiribati\",\r",
+							"\t\"Korea (the Republic of)\",\r",
+							"\t\"Kuwait\",\r",
+							"\t\"Kyrgyzstan\",\r",
+							"\t\"Latvia\",\r",
+							"\t\"Lebanon\",\r",
+							"\t\"Lesotho\",\r",
+							"\t\"Liberia\",\r",
+							"\t\"Libya\",\r",
+							"\t\"Liechtenstein\",\r",
+							"\t\"Lithuania\",\r",
+							"\t\"Luxembourg\",\r",
+							"\t\"Macao\",\r",
+							"\t\"Madagascar\",\r",
+							"\t\"Malawi\",\r",
+							"\t\"Malaysia\",\r",
+							"\t\"Maldives\",\r",
+							"\t\"Mali\",\r",
+							"\t\"Malta\",\r",
+							"\t\"Marshall Islands (the)\",\r",
+							"\t\"Martinique\",\r",
+							"\t\"Mauritania\",\r",
+							"\t\"Mauritius\",\r",
+							"\t\"Mayotte\",\r",
+							"\t\"Mexico\",\r",
+							"\t\"Moldova (the Republic of)\",\r",
+							"\t\"Monaco\",\r",
+							"\t\"Mongolia\",\r",
+							"\t\"Montenegro\",\r",
+							"\t\"Montserrat\",\r",
+							"\t\"Morocco\",\r",
+							"\t\"Mozambique\",\r",
+							"\t\"Myanmar\",\r",
+							"\t\"Namibia\",\r",
+							"\t\"Nauru\",\r",
+							"\t\"Nepal\",\r",
+							"\t\"Netherlands (the)\",\r",
+							"\t\"New Caledonia\",\r",
+							"\t\"New Zealand\",\r",
+							"\t\"Nicaragua\",\r",
+							"\t\"Niger (the)\",\r",
+							"\t\"Nigeria\",\r",
+							"\t\"Niue\",\r",
+							"\t\"Norfolk Island\",\r",
+							"\t\"Norway\",\r",
+							"\t\"Oman\",\r",
+							"\t\"Pakistan\",\r",
+							"\t\"Palau\",\r",
+							"\t\"Palestine, State of\",\r",
+							"\t\"Panama\",\r",
+							"\t\"Papua New Guinea\",\r",
+							"\t\"Paraguay\",\r",
+							"\t\"Peru\",\r",
+							"\t\"Philippines (the)\",\r",
+							"\t\"Pitcairn\",\r",
+							"\t\"Poland\",\r",
+							"\t\"Portugal\",\r",
+							"\t\"Puerto Rico\",\r",
+							"\t\"Qatar\",\r",
+							"\t\"Republic of North Macedonia\",\r",
+							"\t\"Romania\",\r",
+							"\t\"Russian Federation (the)\",\r",
+							"\t\"Rwanda\",\r",
+							"\t\"Réunion\",\r",
+							"\t\"Saint Barthélemy\",\r",
+							"\t\"Saint Kitts and Nevis\",\r",
+							"\t\"Saint Lucia\",\r",
+							"\t\"Saint Martin (French part)\",\r",
+							"\t\"Saint Pierre and Miquelon\",\r",
+							"\t\"Saint Vincent and the Grenadines\",\r",
+							"\t\"Samoa\",\r",
+							"\t\"San Marino\",\r",
+							"\t\"Sao Tome and Principe\",\r",
+							"\t\"Saudi Arabia\",\r",
+							"\t\"Senegal\",\r",
+							"\t\"Serbia\",\r",
+							"\t\"Seychelles\",\r",
+							"\t\"Sierra Leone\",\r",
+							"\t\"Singapore\",\r",
+							"\t\"Sint Maarten (Dutch part)\",\r",
+							"\t\"Slovakia\",\r",
+							"\t\"Slovenia\",\r",
+							"\t\"Solomon Islands\",\r",
+							"\t\"Somalia\",\r",
+							"\t\"South Africa\",\r",
+							"\t\"South Sudan\",\r",
+							"\t\"Spain\",\r",
+							"\t\"Sri Lanka\",\r",
+							"\t\"Sudan (the)\",\r",
+							"\t\"Suriname\",\r",
+							"\t\"Svalbard and Jan Mayen\",\r",
+							"\t\"Sweden\",\r",
+							"\t\"Switzerland\",\r",
+							"\t\"Syrian Arab Republic\",\r",
+							"\t\"Taiwan\",\r",
+							"\t\"Tajikistan\",\r",
+							"\t\"Tanzania, United Republic of\",\r",
+							"\t\"Thailand\",\r",
+							"\t\"Timor-Leste\",\r",
+							"\t\"Togo\",\r",
+							"\t\"Tokelau\",\r",
+							"\t\"Tonga\",\r",
+							"\t\"Trinidad and Tobago\",\r",
+							"\t\"Tunisia\",\r",
+							"\t\"Turkey\",\r",
+							"\t\"Turkmenistan\",\r",
+							"\t\"Turks and Caicos Islands (the)\",\r",
+							"\t\"Tuvalu\",\r",
+							"\t\"Uganda\",\r",
+							"\t\"Ukraine\",\r",
+							"\t\"United Arab Emirates (the)\",\r",
+							"\t\"United Kingdom of Great Britain\",\r",
+							"\t\"United States of America\",\r",
+							"\t\"Uruguay\",\r",
+							"\t\"Uzbekistan\",\r",
+							"\t\"Vanuatu\",\r",
+							"\t\"Venezuela (Bolivarian Republic of)\",\r",
+							"\t\"Viet Nam\",\r",
+							"\t\"Virgin Islands (British)\",\r",
+							"\t\"Virgin Islands (U.S.)\",\r",
+							"\t\"Wallis and Futuna\",\r",
+							"\t\"Western Sahara\",\r",
+							"\t\"Yemen\",\r",
+							"\t\"Zambia\",\r",
+							"\t\"Zimbabwe\",\r",
+							"\t\"Åland Islands\"\r",
+							"];\r",
+							"  var randomCountry = countryList[Math.floor(Math.random() * countryList.length)];\r",
+							"  pm.environment.set(\"country\", randomCountry);\r",
+							"\r",
+							"var animalList = [\r",
+							"  \"Red lava crab\",\r",
+							"  \"Tenrec, tailless\",\r",
+							"  \"Kingfisher, malachite\",\r",
+							"  \"Legaan, water\",\r",
+							"  \"Red-tailed wambenger\",\r",
+							"  \"Ibis, puna\",\r",
+							"  \"Fox, bat-eared\",\r",
+							"  \"Horned rattlesnake\",\r",
+							"  \"Madagascar hawk owl\",\r",
+							"  \"Heron, boat-billed\",\r",
+							"  \"Roseat flamingo\",\r",
+							"  \"Bat-eared fox\",\r",
+							"  \"Asian red fox\",\r",
+							"  \"Otter, canadian river\",\r",
+							"  \"Chipmunk, least\",\r",
+							"  \"Turtle, eastern box\",\r",
+							"  \"Hawk, red-tailed\",\r",
+							"  \"Black-eyed bulbul\",\r",
+							"  \"Penguin, magellanic\",\r",
+							"  \"Mudskipper (unidentified)\",\r",
+							"  \"Yellow-billed hornbill\",\r",
+							"  \"Roadrunner, greater\",\r",
+							"  \"Gazelle, thomson's\",\r",
+							"  \"Yellow-headed caracara\",\r",
+							"  \"Mountain lion\",\r",
+							"  \"Plover, blacksmith\",\r",
+							"  \"Gecko, tokay\",\r",
+							"  \"Common dolphin\",\r",
+							"  \"Green-winged trumpeter\",\r",
+							"  \"Stanley bustard\",\r",
+							"  \"Crown of thorns starfish\",\r",
+							"  \"Heron, striated\",\r",
+							"  \"Hottentot teal\",\r",
+							"  \"Sociable weaver\",\r",
+							"  \"Lemur, brown\",\r",
+							"  \"Black-faced kangaroo\",\r",
+							"  \"Stork, saddle-billed\",\r",
+							"  \"Otter, canadian river\",\r",
+							"  \"Reedbuck, bohor\",\r",
+							"  \"Rhinoceros, black\",\r",
+							"  \"Caracara (unidentified)\",\r",
+							"  \"Australian magpie\",\r",
+							"  \"Kite, black\",\r",
+							"  \"Thrasher, curve-billed\",\r",
+							"  \"Hartebeest, red\",\r",
+							"  \"Comb duck\",\r",
+							"  \"Seal, northern elephant\",\r",
+							"  \"Lechwe, kafue flats\",\r",
+							"  \"Stork, white-necked\",\r",
+							"  \"Carpet snake\",\r",
+							"  \"Aardwolf\",\r",
+							"  \"Common green iguana\",\r",
+							"  \"Eagle, bald\",\r",
+							"  \"White-lipped peccary\",\r",
+							"  \"Ring dove\",\r",
+							"  \"Ground legaan\",\r",
+							"  \"Blesbok\",\r",
+							"  \"Long-finned pilot whale\",\r",
+							"  \"Pied butcher bird\",\r",
+							"  \"Sloth, pale-throated three-toed\",\r",
+							"  \"Bird, magnificent frigate\",\r",
+							"  \"Bunting, crested\",\r",
+							"  \"Dama wallaby\",\r",
+							"  \"Blesbok\",\r",
+							"  \"Vulture, lappet-faced\",\r",
+							"  \"Sacred ibis\",\r",
+							"  \"Indian red admiral\",\r",
+							"  \"Antelope, roan\",\r",
+							"  \"Owl, great horned\",\r",
+							"  \"Knob-nosed goose\",\r",
+							"  \"Oriental white-backed vulture\",\r",
+							"  \"Bee-eater, carmine\",\r",
+							"  \"Brush-tailed phascogale\",\r",
+							"  \"Armadillo, giant\",\r",
+							"  \"Hudsonian godwit\",\r",
+							"  \"Onager\",\r",
+							"  \"Cat, miner's\",\r",
+							"  \"Otter, north american river\",\r",
+							"  \"Common zebra\",\r",
+							"  \"Desert kangaroo rat\",\r",
+							"  \"Seven-banded armadillo\",\r",
+							"  \"Javanese cormorant\",\r",
+							"  \"Comb duck\",\r",
+							"  \"Stanley crane\",\r",
+							"  \"Waxbill, blue\",\r",
+							"  \"Carmine bee-eater\",\r",
+							"  \"Frogmouth, tawny\",\r",
+							"  \"Kingfisher, white-throated\",\r",
+							"  \"Blue and yellow macaw\",\r",
+							"  \"Bee-eater, white-fronted\",\r",
+							"  \"Bottle-nose dolphin\",\r",
+							"  \"Clark's nutcracker\",\r",
+							"  \"American black bear\",\r",
+							"  \"Capuchin, black-capped\",\r",
+							"  \"Knob-nosed goose\",\r",
+							"  \"Tawny frogmouth\",\r",
+							"  \"Tropical buckeye butterfly\",\r",
+							"  \"Capuchin, weeper\",\r",
+							"  \"Kinkajou\",\r",
+							"  \"Chickadee, black-capped\"\r",
+							"  ];\r",
+							"  var randomAnimal = animalList[Math.floor(Math.random() * animalList.length)];\r",
+							"  pm.environment.set(\"animal\", randomAnimal);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"name\": \"{{animal}}\",\r\n    \"location\": \"{{country}}\",\r\n    \"description\": \"created event\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{public-ip}}/events/",
+					"protocol": "http",
+					"host": [
+						"{{public-ip}}"
+					],
+					"path": [
+						"events",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Events",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Success check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status.success).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{public-ip}}/events",
+					"protocol": "http",
+					"host": [
+						"{{public-ip}}"
+					],
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Event by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Success check\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status.success).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{public-ip}}/events/{{event-id}}",
+					"protocol": "http",
+					"host": [
+						"{{public-ip}}"
+					],
+					"path": [
+						"events",
+						"{{event-id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
