@@ -12,14 +12,16 @@
  module "vpc" {
    source     = "./modules/vpc"
    cidr_block = "10.100.0.0/16"
-   account_owner = local.name
+   #account_owner = local.name
+   name       = "udacity-rds"
    azs           = ["us-east-2a", "us-east-2b", "us-east-2c"]
  }
 
   module "vpc_west" {
    source     = "./modules/vpc"
    cidr_block = "10.100.0.0/16"
-   account_owner = local.name
+   #account_owner = local.name
+   name       = "udacity-rds-west"
    azs           = ["us-west-1b", "us-west-1c"]
   providers = {
     aws = aws.usw1
