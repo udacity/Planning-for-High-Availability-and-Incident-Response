@@ -2,7 +2,7 @@
    source     = "./modules/vpc"
    cidr_block = "10.100.0.0/16"
    name       = "udacity-rds"
-   azs           = ["us-east-2a", "us-east-2b", "us-east-2c"]
+   azs           = ["us-east-1a", "us-east-1b", "us-east-1c"]
  }
 
   module "vpc_west" {
