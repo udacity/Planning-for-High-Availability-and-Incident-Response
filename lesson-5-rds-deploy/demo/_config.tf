@@ -1,5 +1,3 @@
-plugin_cache_dir = "/tmp"
-
 terraform {
    backend "s3" {
      bucket = "udacity-tf-tscotto"
