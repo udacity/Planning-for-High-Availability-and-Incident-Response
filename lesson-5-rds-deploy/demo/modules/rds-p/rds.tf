@@ -40,10 +40,6 @@ output "db_cluster_arn" {
   value = aws_rds_cluster.udacity_cluster.arn
 }
 
-# output "db_instance_arn" {
-#   value = aws_rds_cluster_instance.udacity_instance[1].arn
-# }
-
 resource "aws_rds_cluster_instance" "udacity_instance" {
   count                = 2
   identifier           = "udacity-db-instance-${count.index}"
