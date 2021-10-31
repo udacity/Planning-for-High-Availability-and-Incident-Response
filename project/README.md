@@ -44,7 +44,7 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
     - click next until created.
     - Update `_config.tf` in the `zone1` folder with your S3 bucket name where you will replace `<your_name>` with your name
 
-4. Change your region to `us-west-1`. From the AWS console create an S3 bucket in `us-west-1` called `udacity-tf-<your_name>` e.g `udacity-tf-tscotto`
+4. Change your region to `us-west-1`. From the AWS console create an S3 bucket in `us-west-1` called `udacity-tf-<your_name>-west` e.g `udacity-tf-tscotto`
     - click next until created.
     - Update `_config.tf` in the `zone2` folder with your S3 bucket name where you will replace `<yourname>` with your name
 
@@ -62,6 +62,7 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
     - `unzip terraform_1.0.7_linux_amd64.zip`
     - `mkdir ~/bin`
     - `mv terraform ~/bin`
+    - `export TF_PLUGIN_CACHE_DIR="/tmp"`
 
 - kubectl
     - `curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl`
@@ -144,9 +145,9 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
 
     3. Edit the `Create Event` task and under the Authorization tab put in the token from above under the Token field. Click SAVE! Do the same for the `Get all events` and `Get Event by Id` tasks. Click SAVE!
 
-    4. Run `Create Event` for 100 iterations by clicking the top level `SRE Project` folder in the left-hand side and click the Run icon in the toolbar.
+    4. Run `Create Event` for 100 iterations by clicking the top level `SRE Project` folder in the left-hand side and select just `Create Event` and click the Run icon in the toolbar.
 
-    5. Run `Get all events` for 100 iterations by clicking the top level `SRE Project` folder in the left-hand side and click the Run icon in the toolbar.
+    5. Run `Get all events` for 100 iterations by clicking the top level `SRE Project` folder in the left-hand side and slect just `Get All Events` and click the Run icon in the toolbar.
 
     <!-- 2. Run the Postman runners to generate some traffic. Use 100 iterations -->
 

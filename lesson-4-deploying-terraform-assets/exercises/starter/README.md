@@ -12,6 +12,7 @@
     - `unzip terraform_1.0.7_linux_amd64.zip`
     - `mkdir ~/bin`
     - `mv terraform ~/bin`
+    - `export TF_PLUGIN_CACHE_DIR="/tmp"`
 
 4. Deploy Terraform infrastructure
     - Clone the starter code from the git repo to a folder CloudShell
@@ -19,4 +20,4 @@
     - `terraform init`
     - `terraform apply`
 
-6. At the end of your lesson, run `terraform destroy` and allow it to destroy all your resources
+5. At the end of your lesson, run `terraform destroy` and allow it to destroy all your resources
