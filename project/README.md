@@ -84,6 +84,7 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
      - `kubectl config use-context <cluster_name>`
        - e.g ` arn:aws:eks:us-east-2:139802095464:cluster/udacity-cluster`
    - Confirm with: `kubectl get pods --all-namespaces`
+   - Then run `kubectl create namespace monitoring`
    <!-- - Change context to `udacity` namespace
      - `kubectl config set-context --current --namespace=udacity` -->
 
@@ -113,8 +114,6 @@ sudo systemctl restart nginx
 11. Install Prometheus and Grafana
 
     Change directories to your project directory `cd ../..`
-
-    `kubectl create namespace monitoring` 
 
     `kubectl create secret generic additional-scrape-configs --from-file=prometheus-additional.yaml --namespace monitoring`
 
