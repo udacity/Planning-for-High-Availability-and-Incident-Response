@@ -8,11 +8,21 @@
 
 3. Setup your CloudShell. Open CloudShell in the `us-east-2` region. Install the following:
 
+- helm
+    - `export VERIFY_CHECKSUM=false`
+    - `curl -sSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash`
+
 - terraform
     - `wget https://releases.hashicorp.com/terraform/1.0.7/terraform_1.0.7_linux_amd64.zip`
     - `unzip terraform_1.0.7_linux_amd64.zip`
     - `mkdir ~/bin`
     - `mv terraform ~/bin`
+
+- kubectl
+    - `curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl`
+    - `chmod +x ./kubectl`
+    - `mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin`
+    - `echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc`
 
 4. Deploy Terraform infrastructure
     - Clone the starter code from the git repo to a folder CloudShell
@@ -27,11 +37,10 @@
    - Change kubernetes context to the new AWS cluster
      - `kubectl config use-context <cluster_name>`
        - e.g ` arn:aws:eks:us-east-2:139802095464:cluster/udacity-cluster`
+    - `kubectl create namespace monitoring`
    - Confirm with: `kubectl get pods --all-namespaces`
 
 6. Install Prometheus and Grafana
-
-    `kubectl create namespace monitoring`
 
     `kubectl create secret generic additional-scrape-configs --from-file=prometheus-additional.yaml --namespace monitoring`
 
