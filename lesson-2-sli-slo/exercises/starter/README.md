@@ -17,6 +17,7 @@
     - `unzip terraform_1.0.7_linux_amd64.zip`
     - `mkdir ~/bin`
     - `mv terraform ~/bin`
+    - `export TF_PLUGIN_CACHE_DIR="/tmp"`
 
 - kubectl
     - `curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl`
