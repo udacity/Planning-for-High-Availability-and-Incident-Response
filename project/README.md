@@ -138,9 +138,9 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
 12. Install Postman from [here](https://www.postman.com/downloads/). See additional instructions for [importing the collection, and enviroment files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-postman-data)
 
 13. Open Postman and load the files `SRE-Project-postman-collection.json` and `SRE-Project.postman_environment.json`
-    1. At the top level of the project in Postman, create the `public-ip`, `username` and `email` variable in the Postman file with the public IP you gathered from above and click Save. You can choose whatever you like for the username and email.
+    1. At the top level of the project in Postman, create the `public-ip`, `email` and `token` variable in the Postman file with the public IP you gathered from above and click Save. You can choose whatever you like for the email and see the next step for the token.
 
-    2. Run the `Initialize the Database` and `Register a User` tasks in Postmane. In the register tasks, you will output a token. Make note of this token. 
+    2. Run the `Initialize the Database` and `Register a User` tasks in Postman by clicking the "Send" button on top. In the register tasks, you will output a token. Use this token to create a token variable.
 
     3. Edit the `Create Event` task and under the Authorization tab put in the token from above under the Token field. Click SAVE! Do the same for the `Get all events` and `Get Event by Id` tasks. Click SAVE!
 
