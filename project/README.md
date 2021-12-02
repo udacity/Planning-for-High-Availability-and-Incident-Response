@@ -33,8 +33,8 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
     ```
     <!-- - Replace the owner field in `_data.tf` with your Amazon owner ID assigned on the AMI (you can get this in the console by going to EC2 - AMIs and selecting the Owned by me at the top filter) -->
     - Take note of that AMI ID the script just output. Copy the AMI to `us-east-2` and `us-west-1`:
-        - `aws ec2 copy-image --source-image-id <your-ami-id-from-above> --source-region us-east-1 --region us-east-2 --name "udacity-tscotto"`
-        - `aws ec2 copy-image --source-image-id <your-ami-id-from-above> --source-region us-east-1 --region us-west-1 --name "udacity-tscotto"`
+        - `aws ec2 copy-image --source-image-id <your-ami-id-from-above> --source-region us-east-1 --region us-east-2 --name "udacity-<your_name>"`
+        - `aws ec2 copy-image --source-image-id <your-ami-id-from-above> --source-region us-east-1 --region us-west-1 --name "udacity-<your_name>"`
 
     - Make note of the ami output from the above 2 commands. You'll need to put this in the `ec2.tf` file for `zone1` for `us-east-2` and in `ec2.tf` file for `zone2` for `us-west-1` respectively
 
@@ -43,10 +43,12 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
 3. Close your CloudShell. Change your region to `us-east-2`. From the AWS console create an S3 bucket in `us-east-2` called `udacity-tf-<your_name>` e.g `udacity-tf-tscotto`
     - click next until created.
     - Update `_config.tf` in the `zone1` folder with your S3 bucket name where you will replace `<your_name>` with your name
+    - **NOTE**: S3 bucket names MUST be globally unique!
 
 4. Change your region to `us-west-1`. From the AWS console create an S3 bucket in `us-west-1` called `udacity-tf-<your_name>-west` e.g `udacity-tf-tscotto`
     - click next until created.
-    - Update `_config.tf` in the `zone2` folder with your S3 bucket name where you will replace `<yourname>` with your name
+    - Update `_config.tf` in the `zone2` folder with your S3 bucket name where you will replace `<your_name>` with your name
+    - **NOTE**: S3 bucket names MUST be globally unique!
 
 5. Create a private key pair for your EC2 instances
     - Do this in **BOTH** `us-east-2` and `us-west-1`
@@ -121,8 +123,6 @@ sudo systemctl restart nginx
 
     `helm install prometheus prometheus-community/kube-prometheus-stack -f "values.yaml" --namespace monitoring`
 
-    `helm install prometheus-blackbox-exporter prometheus-community/prometheus-blackbox-exporter -f "blackbox-values.yaml" --namespace monitoring`
-
 <!-- `helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring` -->
 
 <!-- 10. Port forward
@@ -144,9 +144,9 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
 
     3. Edit the `Create Event` task and under the Authorization tab put in the token from above under the Token field. Click SAVE! Do the same for the `Get all events` and `Get Event by Id` tasks. Click SAVE!
 
-    4. Run `Create Event` for 100 iterations by clicking the top level `SRE Project` folder in the left-hand side and select just `Create Event` and click the Run icon in the toolbar.
+    4. Run `Create Event` for 100 iterations AND a 15 second delay between each iteration by clicking the top level `SRE Project` folder in the left-hand side and select just `Create Event` and click the Run icon in the toolbar.
 
-    5. Run `Get all events` for 100 iterations by clicking the top level `SRE Project` folder in the left-hand side and slect just `Get All Events` and click the Run icon in the toolbar.
+    5. Run `Get all events` for 100 iterations AND a 15 second delay between each iteration by clicking the top level `SRE Project` folder in the left-hand side and select just `Get All Events` and click the Run icon in the toolbar.
 
     <!-- 2. Run the Postman runners to generate some traffic. Use 100 iterations -->
 
@@ -158,7 +158,7 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
 
 3. Open Grafana in your web browser
     1. Create a new dashboard with 4 panels. The Prometheus datasource should already be added that you can pull data from. The Flask exporter exports metrics for your EC2 instances provisioned during the install. Please note, while making the panel display the information in a way that makes sense (percentage, milliseconds, etc.) is also good, it is not necessarily a requirement. The backend query and data representation is more important. Same goes for colors and type of graph displayed.
-    2. Create the 4 SLO/SLI panels as defined in the SLO/SLO document. The 4 panel categories will be availability (availability), remaining error budget (error budget), successful requests per second (throughput), and 90th percentile requests finish in this time (latency). See the following for more information on potential metrics to use https://github.com/rycus86/prometheus_flask_exporter
+    2. Create the 4 SLO/SLI panels as defined in the SLO/SLI document. The 4 panel categories will be availability (availability), remaining error budget (error budget), successful requests per second (throughput), and 90th percentile requests finish in this time (latency). See the following for more information on potential metrics to use https://github.com/rycus86/prometheus_flask_exporter
         - **NOTE**: You will not see the goal SLO numbers in your dashboard and that is fine. The application doesn't have enough traffic or time to generate a 99% availabiliy or have an error budget that works.
     3. Please submit your Prometheus queries you use for you dashboards in the `prometheus_queries.md` file [linked here](prometheus_queries.md).
     4. Please take a screenshot of your created dashboard and include that as part of your submission for the project.
@@ -183,10 +183,16 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
         <!-- - Each VM has 3 instances (EC2)
         - Each Kubernetes cluster has 2 nodes -->
         <!-- - The VPC has IPs in multiple availability zones.  -->
-        **Note for availability zones** that not all regions have the same number of availability zones. You will need to lookup the AZs for `us-west-1`. You will get errors when first running the code you will have to fix!
+        **Note for availability zones** that not all regions have the same number of availability zones. You will need to lookup the AZs for `us-west-1`. You will get errors when first running the code you will have to fix in the `zone1` `main.tf` file
+        - You will need to update the bucket name in the `_data.tf` file under the `zone2` folder to reflect the name of the bucket you provisioned in `us-east-2` earlier
         - For the application load balancer, please note the technical requirements:
             - This will attach to the Ubuntu VMs on port 80.
             - It should listen on port 80
+            - **HINT**: we actually provisioned the VPC for us-west-1 in the `zone1` folder, so you'll need to reference the subnet and vpc ID from that module output. Here is the code block you'll need to utilize for the ALB:
+            ```
+            subnet_id = data.terraform_remote_state.vpc.outputs.public_subnet_ids
+            vpc_id = data.terraform_remote_state.vpc.outputs.vpc_id
+            ```
     2. Make the appropriate changes to your code
     - `cd` into your `zone2` folder
     - `terraform init`
