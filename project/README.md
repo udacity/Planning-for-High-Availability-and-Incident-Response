@@ -142,9 +142,9 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
 
     2. Run the `Initialize the Database` and `Register a User` tasks in Postman by clicking the "Send" button on top. In the register tasks, you will output a token. Use this token to create a token variable.
 
-    4. Run `Create Event` for 100 iterations AND a 15 second delay between each iteration by clicking the top level `SRE Project` folder in the left-hand side and select just `Create Event` and click the Run icon in the toolbar.
+    4. Run `Create Event` for 100 iterations by clicking the top level `SRE Project` folder in the left-hand side and select just `Create Event` and click the Run icon in the toolbar.
 
-    5. Run `Get all events` for 100 iterations AND a 15 second delay between each iteration by clicking the top level `SRE Project` folder in the left-hand side and select just `Get All Events` and click the Run icon in the toolbar.
+    5. Run `Get all events` for 100 iterations by clicking the top level `SRE Project` folder in the left-hand side and select just `Get All Events` and click the Run icon in the toolbar.
 
     <!-- 2. Run the Postman runners to generate some traffic. Use 100 iterations -->
 
