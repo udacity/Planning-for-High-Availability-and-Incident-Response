@@ -11,5 +11,5 @@
 
 
 ## Error Budget - Remaining Error Budget
-### Goal of 80% error budget
+### The error budget is 20%
 
