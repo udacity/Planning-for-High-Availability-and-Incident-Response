@@ -1,3 +1,3 @@
 variable "instance_count" {
-  default = "3"
+  default = "2"
 }

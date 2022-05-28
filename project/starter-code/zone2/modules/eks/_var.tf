@@ -15,7 +15,7 @@ variable "name" {}
 
  variable "nodes_max_size" {
    description = "The maximum number of EC2 instances to run."
-   default     = 5
+   default     = 3
  }
 
  variable "nodes_min_size" {

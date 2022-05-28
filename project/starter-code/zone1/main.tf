@@ -24,7 +24,7 @@ locals {
    }
  }
 
-  module "vpc_west" {
+module "vpc_west" {
    source     = "./modules/vpc"
    cidr_block = "10.100.0.0/16"
 
@@ -40,7 +40,7 @@ locals {
   providers = {
     aws = aws.usw1
   }
- }
+}
 
 output "vpc_id" {
    value = module.vpc_west.vpc_id
