@@ -210,8 +210,10 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
 7. Destroy it all. Zone1 first, then zone2 using `terraform destroy`
     1. Please take a screenshot of the final output from Terraform showing the destroyed resources
 
-**NOTE:** You will need to delete the zone1 and zone2 RDS cluster manually as it will not allow you to delete the last read-replica via the Terraform code.
+**NOTE:** 
+1. You will need to delete the zone1 and zone2 RDS cluster manually as it will not allow you to delete the last read-replica via the Terraform code.
     - Please take a screenshot of the final Terraform run and include that as part of your submission for the project.
+2. You may see errors in `terraform destroy`. In this case, we would suggest you go through [this](https://knowledge.udacity.com/questions/793669) thread on knowledge hub.
 
 
 ## Standout Suggestions
