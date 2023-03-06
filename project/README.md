@@ -207,13 +207,10 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
     2. The code for the `rds-s` cluster is commented out in the `rds.tf` file under the `zone-1` folder. You will need to fix the `rds-s` module and then uncomment this code for it to work
     3. Please take a screenshot of a successful Terraform run and include that as part of your submission for the project.
 
-7. Destroy it all. Zone1 first, then zone2 using `terraform destroy`
-    1. Please take a screenshot of the final output from Terraform showing the destroyed resources
-
-**NOTE:** 
-1. You will need to delete the zone1 and zone2 RDS cluster manually as it will not allow you to delete the last read-replica via the Terraform code.
-    - Please take a screenshot of the final Terraform run and include that as part of your submission for the project.
-2. You may see errors in `terraform destroy`. In this case, we would suggest you go through [this](https://knowledge.udacity.com/questions/793669) thread on knowledge hub.
+7. Destroy it all. 
+    1. Delete the RDS Clusters manually: first the primary, then the secondary. 
+    2. Destroy zone2 first, then zone1 using `terraform destroy`.
+    3. Please take a screenshot of the final output from Terraform showing the destroyed resources and include that as part of your submission for the project.
 
 
 ## Standout Suggestions
