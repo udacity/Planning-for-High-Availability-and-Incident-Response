@@ -1,14 +1,31 @@
 # Infrastructure
 
 ## AWS Zones
-Identify your zones here
-
+us-east-2 ("us-east-2a","us-east-2b","us-east-2c") and 
+us-west-1 ("us-west-1b","us-west-1a")
 ## Servers and Clusters
 
 ### Table 1.1 Summary
 | Asset      | Purpose           | Size                                                                   | Qty                                                             | DR                                                                                                           |
 |------------|-------------------|------------------------------------------------------------------------|-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| Asset name | Brief description | AWS size eg. t3.micro (if applicable, not all assets will have a size) | Number of nodes/replicas or just how many of a particular asset | Identify if this asset is deployed to DR, replicated, created in multiple locations or just stored elsewhere |
+| 3 EC2 instances  | Brief description | AWS size eg. t3.micro (if applicable, not all assets will have a size) | Number of nodes/replicas or just how many of a particular asset | is deployed to DR |
+|------------|-------------------|------------------------------------------------------------------------|-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| Kubernetes  | resource monitoring | AWS size eg. t3.micro (if applicable, not all assets will have a size) | 2 nodes (EKS) | is deployed to DR |
+|------------|-------------------|------------------------------------------------------------------------|-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| VPC  | Brief description | AWS size eg. t3.micro (if applicable, not all assets will have a size) | Number of nodes/replicas or just how many of a particular asset | has IPs in multiple availability zones, is deployed to DR |
+|------------|-------------------|------------------------------------------------------------------------|-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| An application load balancer  | Brief description | AWS size eg. t3.micro (if applicable, not all assets will have a size) | Number of nodes/replicas or just how many of a particular asset | is deployed to DR, replicated, created in multiple locations or just stored elsewhere |
+|------------|-------------------|------------------------------------------------------------------------|-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| SQL cluster   | a distributed database designed for scalability and high availability | AWS size eg. t3.micro (if applicable, not all assets will have a size) | 2 instance nodes for each cluster | is deployed to replicated, created in multiple locations |
+|------------|-------------------|------------------------------------------------------------------------|-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| VPC  | Brief description | AWS size eg. t3.micro (if applicable, not all assets will have a size) | Number of nodes/replicas or just how many of a particular asset | Identify if this asset is deployed to DR, replicated, created in multiple locations or just stored elsewhere |
+|------------|-------------------|------------------------------------------------------------------------|-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| VPC  | Brief description | AWS size eg. t3.micro (if applicable, not all assets will have a size) | Number of nodes/replicas or just how many of a particular asset | Identify if this asset is deployed to DR, replicated, created in multiple locations or just stored elsewhere |
+|------------|-------------------|------------------------------------------------------------------------|-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| VPC  | Brief description | AWS size eg. t3.micro (if applicable, not all assets will have a size) | Number of nodes/replicas or just how many of a particular asset | Identify if this asset is deployed to DR, replicated, created in multiple locations or just stored elsewhere |
+
+
+
 
 ### Descriptions
 More detailed descriptions of each asset identified above.
