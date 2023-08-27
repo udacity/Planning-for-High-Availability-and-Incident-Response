@@ -47,7 +47,7 @@
 
     `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
 
-    `helm install prometheus prometheus-community/kube-prometheus-stack -f "values.yaml" --namespace monitoring`
+    `helm install prometheus prometheus-community/kube-prometheus-stack -f "values.yaml" --namespace monitoring --version 40.0.0`
 
 Get the DNS of your load balancer provisioned to access Prometheus. You can find this by opening your AWS console and going to EC2 -> Load Balancers and selecting the load balancer provisioned. The DNS name of it will be listed below that you can copy and paste into your browser. Copy that into your web browser with the port `:9090` appended to access Prometheus. It will look something like this:
 `ab8ec64a7ad1d4a03b4c8039511bb2c6-3e6b8d197cd16333.elb.us-east-2.amazonaws.com:9090`
