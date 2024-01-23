@@ -1369,7 +1369,7 @@ prometheusOperator:
       enabled: true
       image:
         repository: jettech/kube-webhook-certgen
-        tag: v.1.5.1
+        tag: v1.5.2
         sha: ""
         pullPolicy: IfNotPresent
       resources: {}
