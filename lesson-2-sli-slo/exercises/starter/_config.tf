@@ -10,7 +10,7 @@ terraform {
    region = "us-east-2"
    #profile = "default"
    
-   default_tags {
-     tags = local.tags
-   }
+   #default_tags {
+   #  tags = local.tags
+   #}
  }
