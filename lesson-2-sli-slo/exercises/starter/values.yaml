@@ -1368,8 +1368,8 @@ prometheusOperator:
     patch:
       enabled: true
       image:
-        repository: public.ecr.aws/bakery-central/registry-k8s-io/ingress-nginx/kube-webhook-certgen
-        tag: v20231011-8b53cabe0
+        repository: ingress-nginx/kube-webhook-certgen
+        tag: v20230407
         sha: ""
         pullPolicy: IfNotPresent
       resources: {}
