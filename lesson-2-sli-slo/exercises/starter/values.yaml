@@ -1390,7 +1390,7 @@ prometheusOperator:
         runAsNonRoot: true
         runAsUser: 2000
 
-    Use certmanager to generate webhook certs
+    # Use certmanager to generate webhook certs
     certManager:
       enabled: false
       # issuerRef:
