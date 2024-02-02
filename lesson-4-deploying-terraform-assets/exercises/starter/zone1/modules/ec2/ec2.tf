@@ -13,14 +13,16 @@ resource "aws_instance" "ubuntu" {
 resource "aws_security_group" "ec2_sg" {
  name = "ec2_sg"
  instance_type = var.instance_type
- ingress = {
-  from_port = "80"
-  to_port = "80"
- }
- ingress = {
-  from_port = "22"
-  to_port = "22"
- }
+ ingress = [
+     {
+      from_port = "80"
+      to_port = "80"
+     }
+     ingress = {
+      from_port = "22"
+      to_port = "22"
+     }
+ ]
  tags = {
   Name = "ec2_sg"
  }
