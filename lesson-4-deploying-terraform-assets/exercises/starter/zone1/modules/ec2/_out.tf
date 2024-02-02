@@ -2,6 +2,6 @@ output "aws_instance" {
    
  }
 
- output "ec2_sg" {
+output "ec2_sg" {
      
- }
+}
