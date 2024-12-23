@@ -26,17 +26,39 @@
    )
  }
 
- resource "aws_route" "public_internet_gateway" {
-   count = length(var.azs) > 0 ? length(var.azs) : 0
+#  resource "aws_route" "public_internet_gateway" {
+#    count = length(var.azs) > 0 ? length(var.azs) : 0
 
-   route_table_id         = aws_route_table.public[0].id
-   destination_cidr_block = "0.0.0.0/0"
-   gateway_id             = aws_internet_gateway.this[0].id
+#    route_table_id         = aws_route_table.public[0].id
+#    destination_cidr_block = "0.0.0.0/0"
+#    gateway_id             = aws_internet_gateway.this[0].id
 
-   timeouts {
-     create = "5m"
-   }
- }
+#    timeouts {
+#      create = "5m"
+#    }
+#  }
+
+###################
+# Route to Internet Gateway (1 route for the entire public route table)
+###################
+resource "aws_route" "public_internet_gateway" {
+  count = length(var.azs) > 0 ? 1 : 0
+
+  route_table_id         = aws_route_table.public[0].id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.this[0].id
+
+  lifecycle {
+    ignore_changes = [
+      route_table_id,
+      destination_cidr_block
+    ]
+  }
+
+  timeouts {
+    create = "5m"
+  }
+}
 
  ##############
  # NAT Gateway

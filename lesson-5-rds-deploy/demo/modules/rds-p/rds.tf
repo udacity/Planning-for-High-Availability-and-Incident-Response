@@ -1,6 +1,6 @@
 resource "aws_rds_cluster_parameter_group" "cluster_pg" {
   name   = "udacity-pg-p"
-  family = "aurora5.6"
+  family = "aurora-mysql8.0" # Update this line
 
   parameter {
     name  = "binlog_format"    
@@ -29,8 +29,9 @@ resource "aws_rds_cluster" "udacity_cluster" {
   master_password          = "MyUdacityPassword"
   vpc_security_group_ids   = [aws_security_group.db_sg_1.id]
   db_subnet_group_name     = aws_db_subnet_group.udacity_db_subnet_group.name
+  engine                   = "aurora-mysql"  # Add this line
   engine_mode              = "provisioned"
-  engine_version           = "5.6.mysql_aurora.1.19.1" 
+  engine_version           = "8.0.mysql_aurora.3.08.0"  # Update this line
   skip_final_snapshot      = true
   storage_encrypted        = false
   backup_retention_period  = 5
@@ -45,8 +46,9 @@ resource "aws_rds_cluster_instance" "udacity_instance" {
   count                = 2
   identifier           = "udacity-db-instance-${count.index}"
   cluster_identifier   = aws_rds_cluster.udacity_cluster.id
-  instance_class       = "db.t2.small"
+  instance_class       = "db.t3.medium" # Update this line
   db_subnet_group_name = aws_db_subnet_group.udacity_db_subnet_group.name
+  engine               = "aurora-mysql"  # Add this line
 }
 
 resource "aws_security_group" "db_sg_1" {
