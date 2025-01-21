@@ -7,7 +7,7 @@ resource "kubernetes_namespace" "udacity" {
    ]
  }
 
-  # Add the monitoring namespace resource
+# Add the monitoring namespace resource
 resource "kubernetes_namespace" "monitoring" {
   metadata {
     name = "monitoring"
@@ -18,7 +18,7 @@ resource "kubernetes_namespace" "monitoring" {
   ]
 }
 
-  resource "kubernetes_service" "grafana-external" {
+resource "kubernetes_service" "grafana-external" {
   metadata {
     name      = "grafana-external"
     namespace = "monitoring"

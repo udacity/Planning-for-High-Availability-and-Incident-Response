@@ -1,12 +1,3 @@
-# resource "aws_instance" "web" {
-#   ami           = var.aws_ami
-#   instance_type = "t3.micro"
-
-#   tags = {
-#     Name = "Web"
-#   }
-# }
-
 resource "aws_instance" "ubuntu" {
   ami           = var.aws_ami
   count = var.instance_count
