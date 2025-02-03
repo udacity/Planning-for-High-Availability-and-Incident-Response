@@ -20,7 +20,7 @@ provider "kubernetes" {
    private_subnet_ids = data.terraform_remote_state.vpc.outputs.private_subnet_ids
    ec2_sg             = module.project_ec2.ec2_sg
    vpc_id             = data.terraform_remote_state.vpc.outputs.vpc_id
-   nodes_desired_size = 2
+   nodes_desired_size = 1
    nodes_max_size     = 2
    nodes_min_size     = 1
    instance_policy    = data.aws_iam_policy.instance-policy

@@ -27,9 +27,8 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
 2. Copy the AMI to your account
 
    **Restore image**
-
     ```shell
-    aws ec2 create-restore-image-task --object-key ami-0ec6fdfb365e5fc00.bin --bucket udacity-srend --name "udacity-<your_name>"
+    aws ec2 create-restore-image-task --object-key ami-0ec6fdfb365e5fc00.bin --bucket udacity-srend --name "udacity-<your_name>" --region us-east-1
     ```
     <!-- - Replace the owner field in `_data.tf` with your Amazon owner ID assigned on the AMI (you can get this in the console by going to EC2 - AMIs and selecting the Owned by me at the top filter) -->
     - Take note of that AMI ID the script just output. Copy the AMI to `us-east-2` and `us-west-1`:
@@ -60,14 +59,14 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
     - `curl -sSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash`
 
 - terraform
-    - `wget https://releases.hashicorp.com/terraform/1.0.7/terraform_1.0.7_linux_amd64.zip`
-    - `unzip terraform_1.0.7_linux_amd64.zip`
+    - `wget https://releases.hashicorp.com/terraform/1.10.3/terraform_1.10.3_linux_amd64.zip`
+    - `unzip terraform_1.10.3_linux_amd64.zip`
     - `mkdir ~/bin`
     - `mv terraform ~/bin`
     - `export TF_PLUGIN_CACHE_DIR="/tmp"`
 
 - kubectl
-    - `curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl`
+    - `curl -o kubectl https://s3.us-west-2.amazonaws.com/amazon-eks/1.31.2/2024-11-15/bin/linux/amd64/kubectl`
     - `chmod +x ./kubectl`
     - `mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin`
     - `echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc`
@@ -211,6 +210,44 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
     1. Delete the RDS Clusters manually: first the primary, then the secondary. 
     2. Destroy zone2 first, then zone1 using `terraform destroy`.
     3. Please take a screenshot of the final output from Terraform showing the destroyed resources and include that as part of your submission for the project.
+
+## Destroy it all
+### Step 1: Destroy Resources in Zone 1 Folder
+
+1. Open the **zone1** folder.
+2. Run the following command to destroy the specific AWS RDS cluster resource:
+
+   ```
+   terraform destroy -target=module.project_rds_p.aws_rds_cluster.udacity_cluster
+   ```
+
+   This command will delete the RDS cluster named `udacity_cluster` managed by the `project_rds_p` module in the `zone1` folder.
+
+---
+
+### Step 2: Destroy All Resources in Zone 2 Folder
+
+1. Open the **zone2** folder.
+2. Run the following command to destroy **all** Terraform-managed resources in the `zone2` folder:
+
+   ```
+   terraform destroy
+   ```
+
+   This will remove all resources that are defined in the `zone2` configuration.
+
+---
+
+### Step 3: Destroy All Resources in Zone 1 Folder
+
+1. Return to the **zone1** folder.
+2. Run the following command to destroy **all** resources in the `zone1` folder:
+
+   ```
+   terraform destroy
+   ```
+
+   This will remove all resources that are defined in the `zone1` configuration.
 
 
 ## Standout Suggestions
